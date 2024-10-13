@@ -1,0 +1,41 @@
+server.name: kibana
+server.host: "0.0.0.0"
+server.port: 5602
+
+# Elasticsearch connection
+elasticsearch.hosts: ["http://elasticsearch_container:9201"]
+
+# Monitoring
+xpack.monitoring.ui.enabled: true
+xpack.monitoring.collection.enabled: true
+monitoring.ui.container.elasticsearch.enabled: true
+
+# Fleet configuration
+xpack.fleet.enabled: true
+xpack.fleet.agent.enabled: true
+xpack.fleet.elasticsearch.host: ["http://elasticsearch_container:9201"]
+xpack.fleet.agent.fleet_server_hosts: ["http://kibana_container:9243"]
+
+# Reporting roles
+xpack.reporting.roles.enabled: true
+
+# Encrypted saved objects
+xpack.encryptedSavedObjects.encryptionKey: "this-is-key"
+
+# Fleet packages configuration
+xpack.fleet.packages:
+  - name: apm
+    version: latest
+
+xpack.fleet.agentPolicies:
+  - name: Agent policy 1
+    id: agent-policy-1
+    namespace: default
+    monitoring_enabled: 
+      - logs
+      - metrics
+    package_policies:
+      - name: apm-1
+        id: default-apm
+        package:
+          name: apm
